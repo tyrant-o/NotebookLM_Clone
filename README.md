@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Google NotebookLM Clone
 
-## Getting Started
+This is a full-stack Next.js web application that replicates the core functionality of Google's NotebookLM. It allows users to upload PDF documents and ask questions about them. The system uses a complete RAG (Retrieval-Augmented Generation) pipeline to chunk, embed, store, and retrieve relevant document sections, generating answers using OpenAI models grounded strictly in the provided content.
 
-First, run the development server:
+## Features
+- **Upload Multiple PDFs:** Upload documents simultaneously via drag and drop.
+- **RAG Pipeline:** End-to-end ingestion, document chunking, embeddings, storage, retrieval, and generation.
+- **Chunking Strategy:** Implemented `RecursiveCharacterTextSplitter` (1000 characters chunk size, 200 overlap) to maintain contextual boundaries like paragraphs and sentences.
+- **Vector Database:** Uses Qdrant for storing embeddings and fast similarity search.
+- **Streaming LLM:** Answers stream back in real-time using Vercel AI SDK and OpenAI (`gpt-4o-mini`).
+- **Modern UI:** Tailwind CSS, Lucide icons, responsive layout, and dark mode aesthetics.
 
+## Local Setup
+
+### 1. Requirements
+- Node.js 18+
+- A running instance of Qdrant (either via Docker or Qdrant Cloud)
+- OpenAI API Key
+
+### 2. Environment Variables
+Copy the example environment file and fill in your keys:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
+```
+Add your keys inside `.env.local`:
+```
+OPENAI_API_KEY=your_openai_api_key
+QDRANT_URL=http://localhost:6333  # Or your Qdrant Cloud URL
+QDRANT_API_KEY=your_qdrant_api_key # Only if using Qdrant Cloud
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation & Running
+```bash
+npm install
+npm run dev
+```
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment (Vercel / Render)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To satisfy the assignment's requirement of a **Live Project Link** accessible without local setup, you must deploy this application.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Vector DB Setup:** Create a free cluster on [Qdrant Cloud](https://cloud.qdrant.io/). Get the Cluster URL and API Key.
+2. **Deploy Frontend/Backend:** Push this code to a GitHub repository, then link it to [Vercel](https://vercel.com/) or [Render](https://render.com/).
+3. **Configure Environment Variables:** Add `OPENAI_API_KEY`, `QDRANT_URL`, and `QDRANT_API_KEY` to your Vercel/Render project settings.
+4. **Deploy!** Your application is now accessible via the live Vercel URL without any local setup.

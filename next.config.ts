@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ["@xenova/transformers", "pdf2json"],
+  experimental: {},
 };
 
 export default nextConfig;
